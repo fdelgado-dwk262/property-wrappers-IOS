@@ -40,9 +40,13 @@ struct VistaEditarTheme: View {
     
     var body: some View {
         
+        // ------------------
         // OJO dentro del body se define
+        // No se pasa como parametro OJO no es lo mismo que en tros casos
         @Bindable var themeBindeable = theme
         // esto nos permite poder acceder a los bindings de ina variable obtenidoa de @environment
+        // ------------------
+        
         
         Text("Modo oscurto esta a: \(theme.isDarkMode)")
             .foregroundStyle(theme.isDarkMode ? theme.accenColor : .black)
@@ -56,8 +60,8 @@ struct VistaEditarTheme: View {
     }
 }
 
-
 #Preview {
+    
     @Previewable @State var theme = ThemeManager()
     
     VistaHome()
