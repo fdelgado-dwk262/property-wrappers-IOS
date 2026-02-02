@@ -15,7 +15,7 @@ class ThemeManager {
 
 
 // @main sirve como punto de entrada a al app
-@main
+// @main
 struct App_con_Environment: App {
     
     @State private var theme = ThemeManager()
