@@ -8,11 +8,11 @@
 import SwiftUI
 
 // la escructura .- del main es decir el punto de entrada a la app
-@main
+//@main
 struct property_wrappersApp: App {
     var body: some Scene {
         WindowGroup {
-            bistaBasico()
+            vistaBasico()
         }
     }
 }
