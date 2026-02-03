@@ -12,3 +12,5 @@ El observable nos permite hacer los mismo que @State
 
 Veremos el código que se entenderá mejor
  
+#Modelo vista vista
+* https://es.wikipedia.org/wiki/Modelo–vista–modelo_de_vista
