@@ -48,7 +48,7 @@ struct VistaEditarTheme: View {
         // ------------------
         
         
-        Text("Modo oscurto esta a: \(theme.isDarkMode)")
+        Text("Modo oscurto esta a: \(String(theme.isDarkMode))")
             .foregroundStyle(theme.isDarkMode ? theme.accenColor : .black)
         
         Toggle("Modo oscuro", isOn: $themeBindeable.isDarkMode)

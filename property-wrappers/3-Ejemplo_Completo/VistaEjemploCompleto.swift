@@ -38,7 +38,7 @@ struct VistaEjemploCompleto: View {
 
                             // loca que oculta los completados
                             if !ocultarCompletados || !articulo.completado {
-                                
+
                                 FilaArticulo(articulo: $articulo)
                             }
 
@@ -50,9 +50,21 @@ struct VistaEjemploCompleto: View {
 
                     }
                 }
+                HStack {
+                    TextField("Nuevo deseo ...", text: $nuevoArticulo)
+                        .textFieldStyle(.roundedBorder)
+                    Button("Añadir") {
+                        guard !nuevoArticulo.isEmpty else { return }
+                        appData.anadirArticulo(titulo: nuevoArticulo)
+                        nuevoArticulo = ""
+                    }
+                }
+                .padding(10)
             }
 
-            .navigationTitle("Lista de  \(appData.usuario.nombre)")
+            .navigationTitle(
+                "Lista de  \(appData.usuario.nombre) \(appData.usuario.edad)"
+            )
             .toolbar {
                 Button {
                     mostrarPerfilUsuario = true
@@ -62,7 +74,8 @@ struct VistaEjemploCompleto: View {
             }
             // nuevo elemento que despliega una "hoja"
             .sheet(isPresented: $mostrarPerfilUsuario) {
-                Text("Datos de usuario \(appData.usuario.nombre)")
+                //                Text("Datos de usuario \(appData.usuario.nombre)")
+                VistaEditarPerfil(perfil: appData.usuario)
             }
             // Task se ejecuta al cargar el Navigatiopns, antes de mostrar la vista
             .task {
@@ -71,20 +84,77 @@ struct VistaEjemploCompleto: View {
                 }
             }
         }
+        // cuando la vista se va a dibujar
+        .onAppear {
+            print("Entrando en la vista")
+            print(appData.instanceId)
+        }
+    }
+}
+
+struct VistaEditarPerfil: View {
+
+    // variable global de swiftUI y creamos una variable que la invoca como funcion
+    @Environment(\.dismiss) var dismiss
+    
+    @Environment(AppData.self) var appData
+    
+    @Bindable var perfil: PerfilUsuario
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("Editar perfil") {
+                    TextField("Nombre", text: $perfil.nombre)
+                    Stepper("Edad: \(perfil.edad)", value: $perfil.edad)
+                }
+                
+                VistaEstadisticas()
+            }
+            .navigationTitle(Text("Editar perfil"))
+            .toolbar {
+                Button("realizado") {
+                    dismiss()
+                }
+            }
+        }
+    }
+}
+
+struct VistaEstadisticas: View {
+
+    @Environment(AppData.self) var appData
+
+    var body: some View {
+
+        HStack {
+            Text("Total: \(appData.articulos.count) deseos")
+            Spacer()
+            Text("Completados : \(appData.articulos.filter(\.completado).count)")
+        }
+        .font(.footnote)
+        .padding()
+        .background(Color(.secondarySystemBackground))
+        .clipShape(Capsule())
+        
+        
     }
 }
 
 struct FilaArticulo: View {
-    
+
     @Binding var articulo: Articulo
-    
+
     var body: some View {
         HStack {
-            Image(systemName: articulo.completado ? "checkmark.square.fill" : "square")
-                .foregroundStyle(articulo.completado ? .green : .gray)
-                .onTapGesture {
-                    articulo.completado.toggle()
-                }
+            Image(
+                systemName: articulo.completado
+                    ? "checkmark.square.fill" : "square"
+            )
+            .foregroundStyle(articulo.completado ? .green : .gray)
+            .onTapGesture {
+                articulo.completado.toggle()
+            }
             Text(articulo.titulo)
                 .strikethrough(articulo.completado)
                 .foregroundStyle(articulo.completado ? .gray : .black)
