@@ -30,7 +30,7 @@ class AppData {
         ObjectIdentifier(self)
     }
     
-    init() {
+    init(){
         print("Se ha creado una instacia del appData: \(instanceId)")
     }
     
