@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-//@main
-struct EjemploCompletoApp: App {
+@main
+struct EjercicioCompletoApp: App {
     
     // nuestra variable global que esta disponible sdesde las subvistas
-    @State private var appData = AppData()
+    @State private var appDataEjercicio = AppDataEjercicio()
     
     
     var body: some Scene {
         WindowGroup {
-            VistaEjemploCompleto()
-                .environment(appData)
+            EjercicioCompleto()
+                .environment(appDataEjercicio)
         }
     }
 }
