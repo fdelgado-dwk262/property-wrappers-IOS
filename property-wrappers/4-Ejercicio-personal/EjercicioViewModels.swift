@@ -31,6 +31,7 @@ class UsuarioEjercicio: Identifiable, Hashable {
     init(nombre: String, edad: Int, deseos: [DeseoEjercicio]) {
         self.nombre = nombre
         self.edad = edad
+        self.deseos = deseos
     }
 }
 
